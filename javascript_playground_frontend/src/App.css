@@ -1,104 +1,314 @@
 /* CSS Variables for Theme Management */
 :root {
-  /* Light theme colors */
+  /* LIGHT THEME */
   --bg-primary: #ffffff;
   --bg-secondary: #f8f9fa;
   --text-primary: #282c34;
-  --text-secondary: #61dafb;
+  --text-secondary: #64748b;
   --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --button-bg: #2563eb;
+  --button-hover: #174dc5;
+  --button-text: #fff;
+  --brand-accent: #facc15;
+  --brand-dark: #1a1a1a;
+  --editor-bg: #1e293b;
+  --editor-outline: #ccd6f6;
+  --console-bg: #18181b;
+  --console-border: #64748b14;
 }
 
 [data-theme="dark"] {
-  /* Dark theme colors */
+  /* DARK THEME */
   --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
+  --bg-secondary: #23272e;
+  --text-primary: #fff;
+  --text-secondary: #64748b;
   --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+  --button-bg: #2563eb;
+  --button-hover: #3b82f6;
+  --button-text: #fff;
+  --brand-accent: #facc15;
+  --editor-bg: #18181b;
+  --editor-outline: #64748b;
+  --console-bg: #23272e;
+  --console-border: #3b4252;
 }
 
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
+.playground-root {
+  min-height: 100vh;
+  background: var(--bg-primary);
   color: var(--text-primary);
-  min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+  transition: background 0.3s, color 0.3s;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
+}
+
+/* Header */
+.playground-header {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  height: 64px;
+  padding: 0 1.5rem 0 1.2rem;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 20;
 }
-
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+.brand-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
 }
-
+.brand-dot {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background: var(--brand-accent);
+  border-radius: 50%;
+  margin-right: .67em;
+  box-shadow: 0 0 0 4px #facc1530;
+}
 .theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
+  background: var(--button-bg);
   color: var(--button-text);
   border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
+  border-radius: 5px;
+  padding: 6px 18px;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-left: 0.7rem;
+  transition: background 0.2s;
 }
-
 .theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+  background: var(--button-hover);
+}
+.share-btn {
+  background: var(--brand-accent);
+  border: none;
+  color: var(--brand-dark);
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 7px 22px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 0.8rem;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 4px #0001;
+}
+.share-btn:hover {
+  background: #ffe066;
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+/* Toast when shared */
+.share-toast {
+  position: absolute;
+  top: 56px;
+  right: 20px;
+  font-size: 0.9rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--brand-accent);
+  border-radius: 7px;
+  padding: 12px;
+  box-shadow: 0 2px 25px #0003;
+  z-index: 99;
+  animation: slideInToast 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.share-toast-url {
+  font-size: 0.8em;
+  color: var(--brand-dark);
+  white-space: nowrap;
+  overflow-x: auto;
+  background: #f7e99e;
+  border-radius: 2px;
+  padding: 1px 7px;
+}
+@keyframes slideInToast {
+  from { opacity: .2; transform: translateY(18px);}
+  to { opacity: 1; transform: none;}
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Main Two-Pane */
+.playground-main {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  min-height: 0;
+  background: var(--bg-primary);
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+/* Left: Code Editor Pane */
+.editor-pane {
+  flex: 1 1 55%;
+  display: flex;
+  flex-direction: column;
+  border-right: 1.5px solid var(--border-color);
+  background: var(--bg-primary);
+  min-width: 340px;
+  max-width: 58vw;
+}
+.editor-label {
+  font-size: 1.06rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: transparent;
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.85rem 0 0.8rem 2.1rem;
+  letter-spacing: 0.02em;
+}
+.code-editor-container {
+  flex: 1 1 auto;
+  display: flex;
+  position: relative;
+  min-height: 0;
+}
+.code-textarea {
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  background: var(--editor-bg);
+  color: #fff;
+  resize: none;
+  font-family: 'JetBrains Mono', 'Fira Mono', 'Menlo', 'consolas', monospace;
+  font-size: 1.09rem;
+  padding: 1.5rem 1.4rem;
+  border: none;
+  outline: none;
+  border-right: none;
+  border-radius: 0;
+  z-index: 2;
+  position: relative;
+  caret-color: var(--brand-accent);
+  line-height: 1.65;
+  letter-spacing: 0.02em;
+  box-shadow: none;
+  font-variant-ligatures: none;
+  transition: background 0.25s;
+}
+.editor-prism-pre {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 1.5rem 1.4rem;
+  font-size: 1.09rem;
+  font-family: inherit;
+  color: #cbd5e1;
+  background: transparent !important;
+  z-index: 1;
+  user-select: none;
+  overflow: hidden;
+  border-radius: 0;
+  opacity: 0.35;
+}
+
+/* Right: Output Pane */
+.output-pane {
+  flex: 1 1 45%;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);
+  min-width: 260px;
+}
+.output-label {
+  font-size: 1.04rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: transparent;
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.85rem 0 0.8rem 2.1rem;
+  letter-spacing: 0.02em;
+}
+.console-box {
+  flex: 1 1 auto;
+  min-height: 180px;
+  overflow-y: auto;
+  background: var(--console-bg);
+  color: #e8eaf7;
+  padding: 1.5rem 1.4rem;
+  font-family: 'JetBrains Mono', 'Fira Mono', 'Menlo', 'Consolas', monospace;
+  font-size: 1.07rem;
+  border-left: none;
+  box-shadow: none;
+  border-top: none;
+  border-bottom: none;
+  border-radius: 0;
+  border-right: none;
+  outline: none;
+  transition: background 0.3s;
+}
+.console-output {
+  margin: 0;
+  white-space: pre-wrap;
+  tab-size: 2;
+  font-size: 1.03em;
+}
+.console-muted {
+  color: #6b7280;
+  font-style: italic;
+}
+.console-error {
+  color: #ef4444;
+  font-weight: 600;
+  margin-top: 1.1em;
+  font-size: 1em;
+}
+
+/* Minimal scrollbars */
+.code-editor-container, .console-box, .editor-prism-pre, textarea, pre {
+  scrollbar-width: thin;
+  scrollbar-color: var(--brand-accent) var(--bg-secondary);
+}
+.code-editor-container::-webkit-scrollbar, .console-box::-webkit-scrollbar {
+  width: 7px;
+  background: #161616;
+}
+.code-editor-container::-webkit-scrollbar-thumb, .console-box::-webkit-scrollbar-thumb {
+  background: var(--brand-accent);
+  border-radius: 5px;
+}
+.code-editor-container::-webkit-scrollbar-track, .console-box::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+/* For mobile/small viewports */
+@media (max-width: 950px) {
+  .playground-main {
+    flex-direction: column;
   }
+  .editor-pane, .output-pane {
+    min-width: 0;
+    max-width: none;
+    width: 100%;
+    border-right: none;
+    border-bottom: 1.5px solid var(--border-color);
+  }
+  .output-pane { border-bottom: none; }
+}
+@media (max-width:760px) {
+  .brand-title { font-size: .99em;}
+  .editor-label, .output-label { padding-left: 1.2rem;}
+}
+@media (max-width: 700px) {
+  .playground-header {
+    padding: 0 .6rem;
+  }
+  .editor-label, .output-label { padding-left: 0.7rem;}
+}
+
+/* Hide default React logo etc. */
+.App,
+.App-header,
+.App-logo {
+  display: none !important;
 }
